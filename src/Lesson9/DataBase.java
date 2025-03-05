@@ -36,6 +36,7 @@ public class DataBase {
     }
 
 
+
     public void selectTable(String table_name) throws ClassNotFoundException, SQLException {
         Statement statement = getDbConnection().createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * from " + table_name);
