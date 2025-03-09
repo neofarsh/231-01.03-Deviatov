@@ -39,9 +39,39 @@ public class Main {
                 System.out.println("\n\nфильм добавлен успешно!");
 
             } else if (menu_number == 2) {
-                System.out.printf("неправильная команда!");
+                Scanner sc_two = new Scanner(System.in);
+                
+                System.out.printf("введите код фильма, которого хотите удалить: ");
+                int remove_code = sc_two.nextInt();
+                
+                db.removeFilms(remove_code);
+                System.out.println("\n\nфильм удален успешно!");
             } else if (menu_number == 3) {
                 break;
+            } else if (menu_number == 4) {
+                System.out.println("выберите критерий поиска:");
+                System.out.println("1. название");
+                System.out.println("2. автор");
+                System.out.println("3. код");
+            
+                int search_option = sc.nextInt();
+                sc.nextInt();
+            
+                String column = "";
+                String value = "";
+            
+                if (search_option == 1) {
+                    column = "name";
+                    System.out.printf("введите название: ");
+                } else if (search_option == 2) {
+                    column = "author";
+                    System.out.printf("введите автора: ");
+                } else if (search_option == 3) {
+                    column = "code";
+                    System.out.printf("введите код: ");
+                }
+                value = sc.nextLine();
+                db.searchFilms(column, value);
             } else {
                     System.out.printf("неправильная команда!");
             }
@@ -50,4 +80,3 @@ public class Main {
     }
 
 }
-
