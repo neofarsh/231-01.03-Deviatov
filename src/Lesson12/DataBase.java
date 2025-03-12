@@ -22,15 +22,47 @@ public class DataBase {
         System.out.println("база данных подключена");
     }
 
-    public void addFilms(String name, String author, int code, String rating) throws ClassNotFoundException, SQLException {
-        String sql = "INSERT INTO films VALUES ('" + name + "', '" + author + "', " + code + ", '" + rating + "');";
-        Statement statement = getDbConnection().createStatement();
-        statement.executeUpdate(sql);
+    public void addFilms(String name, String author, String code, String rating) throws ClassNotFoundException, SQLException {
+        String sql = "INSERT INTO films VALUES ('" + name + "', '" + author + "', " + code + ", " + rating + ");";
+        PreparedStatement statement = getDbConnection().prepareStatement(sql);
+        statement.executeUpdate();
     }
 
-    private void removeFilm(double code) throws ClassNotFoundException, SQLException {
-        String sql = "DELETE FROM films WHERE code=" + code +  ";";
-        Statement statement = getDbConnection().createStatement();
-        statement.executeUpdate(sql);
+    public void removeFilms(int code) throws ClassNotFoundException, SQLException {
+        String sql = "DELETE FROM films WHERE code='" + code + "';";
+        PreparedStatement statement = getDbConnection().prepareStatement(sql);
+        statement.executeUpdate();
     }
+
+    public void updateFilms(int update_code, String column, String value) throws ClassNotFoundException, SQLException {
+        String sql = "UPDATE films SET " + column + " = '" + value + "' WHERE code='" + update_code + "';";
+        PreparedStatement statement = getDbConnection().prepareStatement(sql);
+        statement.executeUpdate();
+    }
+
+    public void searchFilms(String column, String value) throws ClassNotFoundException, SQLException {
+        Statement statement = getDbConnection().createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM films WHERE " + column + "='" + value + "';");
+        while (resultSet.next()) {
+            String line_1 = resultSet.getString(1);
+            String line_2 = resultSet.getString(2);
+            String line_3 = resultSet.getString(3);
+            String line_4 = resultSet.getString(4);
+            System.out.println(line_1 + " " + line_2 + " " + line_3 + " " + line_4);
+        }
+    }
+
+    public void allFilms() throws ClassNotFoundException, SQLException {
+        Statement statement = getDbConnection().createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM films;");
+        while (resultSet.next()) {
+            String line_1 = resultSet.getString(1);
+            String line_2 = resultSet.getString(2);
+            String line_3 = resultSet.getString(3);
+            String line_4 = resultSet.getString(4);
+            System.out.println(line_1 + " " + line_2 + " " + line_3 + " " + line_4);
+        }
+    }
+
+
 }
